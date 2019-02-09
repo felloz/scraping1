@@ -1,13 +1,13 @@
 //Consts and variables
 const rp     = require('request-promise');
-const cherio = require('cheerio');
+const cheerio = require('cheerio');
 const Table  = require('cli-table');
 
 let users = [];
 let table = new Table({
     head: ['username', '❤️', 'challenges'],
     colWidths: [15, 5, 10]
-});
+})
 
 
 //Almaceno la url de donde quiero extraer informacion
@@ -16,25 +16,25 @@ const options = {
     json:true
 }
 
-rp =(options)
+rp(options)
       .then((data) => {
           let userData = [];
           for(let user of data.directory_items){
-             userData.push({name: user.user.username, likes_recived: users.likes_recived}); 
+             userData.push({name: user.user.username,likes_received: user.likes_received}); 
           }
-          process.stdout.write('loading')
-          getChallengesCompletedAndPushToUserArray(userData)
+          process.stdout.write('loading');
+          getChallengesCompletedAndPushToUserArray(userData);
       })
       .catch((err) => {
-        console.log(err);
+            console.log(err);
       });
 
-      function getChallengesCompletedAndPushToUserArray(userdata){
+      function getChallengesCompletedAndPushToUserArray(userData){
           var i = 0;
           function next(){
-              if(i < userdata.length){
+              if(i < userData.length) {
                   var options = {
-                      url: `https://www.freecodecamp.org/` + userData[i].name,
+                    url: `https://www.freecodecamp.org/` + userData[i].name,
                       transform: body => cheerio.load(body)
                   }
                   rp(options)
@@ -42,7 +42,7 @@ rp =(options)
                         process.stdout.write(`.`);
                         const fccAccount = $('h1.lading-heading').length == 0;
                         const challengesPassed = fccAccount ? $('tbody tr').length : 'unknown';
-                        table.push([userData[i].name, userData[i].likes_recived, challengesPassed]);
+                        table.push([userData[i].name, userData[i].likes_received, challengesPassed]);
                         ++i;
                         return next();
                     })
@@ -50,10 +50,10 @@ rp =(options)
                   printData();
               }
           }
-          return next;
+          return next();
       };
 
       function printData(){
-          console.log('Check');
+          console.log('✅');
           console.log(table.toString());
       }
