@@ -1,0 +1,9 @@
+Hagamos scraping con node.js and ajax
+
+1. iniciamos npm
+
+$ npm init --yes
+
+2. instalamos request-promise
+
+$ npm install request-promise
