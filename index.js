@@ -4,6 +4,11 @@ const cherio = require('cheerio');
 const Table  = require('cli-table');
 
 let users = [];
+let table = new Table({
+    head: ['username', '❤️', 'challenges'],
+    colWidths: [15, 5, 10]
+});
+
 
 //Almaceno la url de donde quiero extraer informacion
 const options = {
@@ -37,7 +42,18 @@ rp =(options)
                         process.stdout.write(`.`);
                         const fccAccount = $('h1.lading-heading').length == 0;
                         const challengesPassed = fccAccount ? $('tbody tr').length : 'unknown';
+                        table.push([userData[i].name, userData[i].likes_recived, challengesPassed]);
+                        ++i;
+                        return next();
                     })
+              }else{
+                  printData();
               }
           }
+          return next;
+      };
+
+      function printData(){
+          console.log('Check');
+          console.log(table.toString());
       }

@@ -7,3 +7,7 @@ $ npm init --yes
 2. instalamos request-promise
 
 $ npm install request-promise
+
+3. Instalamos Request por un error que dio
+
+$npm install request
