@@ -33,11 +33,11 @@ rp =(options)
                       transform: body => cheerio.load(body)
                   }
                   rp(options)
-                    .then(function($)){
+                    .then(function($){
                         process.stdout.write(`.`);
                         const fccAccount = $('h1.lading-heading').length == 0;
                         const challengesPassed = fccAccount ? $('tbody tr').length : 'unknown';
-                    }
+                    })
               }
           }
       }
